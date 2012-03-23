@@ -3,22 +3,20 @@ package com.chrisgward.bukkit.plugins.Sheep;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Sheep;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
+import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
 import java.rmi.MarshalledObject;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class SheepListener implements Listener {
     HashMap<UUID, Collection<ItemStack>> sheepMaterialHashMap = new HashMap<UUID, Collection<ItemStack>>();
@@ -35,7 +33,8 @@ public class SheepListener implements Listener {
         Sheep sheep = (Sheep)loc.getWorld().spawnCreature(loc, CreatureType.SHEEP);
         sheep.setColor(DyeColor.values()[(new Random()).nextInt() ^ 2 % DyeColor.values().length]);
         sheepMaterialHashMap.put(sheep.getUniqueId(), e.getBlock().getDrops());
-        e.getDrops().clear();
+        e.setCancelled(true);
+        loc.getBlock().setType(Material.AIR);
     }
 
     @EventHandler
@@ -45,8 +44,12 @@ public class SheepListener implements Listener {
         {
             if(sheepMaterialHashMap.containsKey(e.getEntity().getUniqueId()))
             {
-                e.getDrops().clear();
-                e.getDrops().addAll(sheepMaterialHashMap.get(e.getEntity().getUniqueId()));
+                e.setDroppedExp(0);
+                e.getEntity().getLocation().getWorld().dropItem(e.getEntity().getLocation(), (ItemStack)sheepMaterialHashMap.get(e.getEntity().getUniqueId()).toArray()[0]);
+                for(int i = 0; i < e.getDrops().size(); i++)
+                {
+                    e.getDrops().set(i, null);
+                }
             }
         }
     }
