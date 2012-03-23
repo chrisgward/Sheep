@@ -32,7 +32,6 @@ public class SheepListener implements Listener {
         Location loc  = e.getBlock().getLocation();
         Sheep sheep = (Sheep)loc.getWorld().spawnCreature(loc, CreatureType.SHEEP);
         int a = (new Random()).nextInt(DyeColor.values().length - 1);
-        e.getPlayer().sendMessage(Integer.toString(a));
         sheep.setColor(DyeColor.values()[a]);
         sheepMaterialHashMap.put(sheep.getUniqueId(), e.getBlock().getDrops());
         e.setCancelled(true);
