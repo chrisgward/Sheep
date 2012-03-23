@@ -38,7 +38,7 @@ public class SheepListener implements Listener {
         e.setCancelled(true);
         for(int i = 0; i < e.getDrops().size(); i++)
         {
-            e.getDrops().set(i, null);
+            e.getDrops().remove(i);
         }
         loc.getBlock().setType(Material.AIR);
     }
@@ -54,7 +54,7 @@ public class SheepListener implements Listener {
                 e.getEntity().getLocation().getWorld().dropItem(e.getEntity().getLocation(), (ItemStack)sheepMaterialHashMap.get(e.getEntity().getUniqueId()).toArray()[0]);
                 for(int i = 0; i < e.getDrops().size(); i++)
                 {
-                    e.getDrops().set(i, null);
+                    e.getDrops().remove(i);
                 }
             }
         }
