@@ -34,9 +34,9 @@ public class SheepListener implements Listener {
         int a = (new Random()).nextInt(DyeColor.values().length - 1);
         sheep.setColor(DyeColor.values()[a]);
         sheepMaterialHashMap.put(sheep.getUniqueId(), e.getBlock().getDrops());
-        for(int i = 0; i < e.getDrops().size(); i++)
+        for(int i = 0; i < e.getBlock().getDrops().size(); i++)
         {
-            e.getDrops().remove(i);
+            e.getBlock().getDrops().remove(i);
         }
         loc.getBlock().setType(Material.AIR);
         e.setCancelled(true);
