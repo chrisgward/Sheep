@@ -3,19 +3,12 @@ package com.chrisgward.bukkit.plugins.Sheep;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.*;
 import org.bukkit.event.*;
-import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.awt.*;
-import java.rmi.MarshalledObject;
 import java.util.*;
 
 public class SheepListener implements Listener {
@@ -30,7 +23,7 @@ public class SheepListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e)
     {
         Location loc  = e.getBlock().getLocation();
-        Sheep sheep = (Sheep)loc.getWorld().spawnCreature(loc, CreatureType.SHEEP);
+        Sheep sheep = (Sheep)loc.getWorld().spawnCreature(loc, EntityType.SHEEP);
         int a = (new Random()).nextInt(DyeColor.values().length - 1);
         sheep.setColor(DyeColor.values()[a]);
         sheepMaterialHashMap.put(sheep.getUniqueId(), e.getBlock().getDrops());
